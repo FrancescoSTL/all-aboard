@@ -12,6 +12,7 @@ var simpleStorage = require('sdk/simple-storage');
 var tabs = require('sdk/tabs');
 var timers = require('sdk/timers');
 var utils = require('sdk/window/utils');
+let UITour = Cu.import("resource:///modules/UITour.jsm").UITour;
 
 var allAboard;
 var content;
@@ -19,7 +20,6 @@ var firstrunRegex = /.*firefox[\/\d*|\w*\.*]*\/firstrun\//;
 var visible = false;
 
 function showBadge() {
-
     notifications.notify({
         title: 'All Aboard',
         text: 'You have a new message',
@@ -33,9 +33,16 @@ function showBadge() {
     });
 }
 
-function toggleSidebar(state) {
-
+function toggleSidebar(state) { 
     var activeWindow = utils.getMostRecentBrowserWindow();
+
+    UITour.getTarget(activeWindow, "urlbar", false).then(function (chosenItem) {
+        var urlbar = chosenItem.node;
+        urlbar.addEventListener('click', function() {
+            UITour.hideHighlight(activeWindow);
+        });
+    });
+
     var _sidebar = activeWindow.document.getElementById('sidebar');
     _sidebar.style.width = '320px';
     _sidebar.style.maxWidth = '320px';
@@ -50,6 +57,23 @@ function toggleSidebar(state) {
     } else {
         content.show();
     }
+}
+
+/**
+ * Purpose: Highlight a given item in the browser chrome
+ * Parameters: item - String of item you are attempting to highlight
+ */
+function highLight(item) {
+    var activeWindow = utils.getMostRecentBrowserWindow();
+        
+    UITour.getTarget(activeWindow, item, false).then(function(chosenItem) {
+        try {
+            UITour.showHighlight(activeWindow, chosenItem, "wobble");
+        }
+        catch(e) {
+            console.log("Could not highlight element. Check if UITour.jsm supports highlighting of element passed.");
+        }
+    });
 }
 
 /**
@@ -100,7 +124,7 @@ function init() {
     content = sidebar.Sidebar({
         id: 'allboard-content',
         title: 'Make Firefox your own',
-        url: './tmpl/import_data.html',
+        url: './tmpl/utility/day8.html',
         onShow: function() {
             visible = true;
         },
@@ -123,6 +147,10 @@ function init() {
                     worker.port.emit('migrationCompleted');
                 }, "Migration:Ended", false);
             });
+            // handle when user clicks button to try private browsing
+            worker.port.on('highLightPB', function() {
+                highLight("privateWindow");
+            });
         }
     });
 
@@ -137,6 +165,7 @@ function init() {
     });
 
     modifyFirstrun();
+    toggleSidebar();
 }
 
 init();
