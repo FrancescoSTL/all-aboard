@@ -36,6 +36,7 @@ function showBadge() {
 function toggleSidebar(state) { 
     var activeWindow = utils.getMostRecentBrowserWindow();
 
+    // remove all highlights if the user clicks the url bar
     UITour.getTarget(activeWindow, "urlbar", false).then(function (chosenItem) {
         var urlbar = chosenItem.node;
         urlbar.addEventListener('click', function() {
@@ -165,7 +166,6 @@ function init() {
     });
 
     modifyFirstrun();
-    toggleSidebar();
 }
 
 init();
