@@ -163,7 +163,6 @@ function init() {
     });
 
     modifyFirstrun();
-    toggleSidebar();
 }
 
 init();
