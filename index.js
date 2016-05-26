@@ -12,6 +12,7 @@ var simpleStorage = require('sdk/simple-storage');
 var tabs = require('sdk/tabs');
 var timers = require('sdk/timers');
 var utils = require('sdk/window/utils');
+let UITour = Cu.import("resource:///modules/UITour.jsm").UITour;
 
 var allAboard;
 var content;
@@ -19,7 +20,6 @@ var firstrunRegex = /.*firefox[\/\d*|\w*\.*]*\/firstrun\//;
 var visible = false;
 
 function showBadge() {
-
     notifications.notify({
         title: 'All Aboard',
         text: 'You have a new message',
@@ -33,9 +33,9 @@ function showBadge() {
     });
 }
 
-function toggleSidebar(state) {
-
+function toggleSidebar(state) { 
     var activeWindow = utils.getMostRecentBrowserWindow();
+
     var _sidebar = activeWindow.document.getElementById('sidebar');
     _sidebar.style.width = '320px';
     _sidebar.style.maxWidth = '320px';
@@ -50,6 +50,28 @@ function toggleSidebar(state) {
     } else {
         content.show();
     }
+}
+
+/**
+ * Purpose: Open the search bar and enter a specified search term
+ * Parameters: searchTerm - a string of the term you would like to place in the searchbox
+ */
+function openSearch(searchTerm) {
+    var activeWindow = utils.getMostRecentBrowserWindow();
+
+    let barPromise = UITour.getTarget(activeWindow, "search");
+    let iconPromise = UITour.getTarget(activeWindow, "searchIcon");
+    
+    iconPromise.then(target2 => {
+        let searchIcon = target2.node;
+            searchIcon.click();
+
+            barPromise.then(target => {
+                let searchbar = target.node;
+                searchbar.value = searchTerm;
+                searchbar.updateGoButtonVisibility();
+            });
+        }); 
 }
 
 /**
@@ -100,7 +122,7 @@ function init() {
     content = sidebar.Sidebar({
         id: 'allboard-content',
         title: 'Make Firefox your own',
-        url: './tmpl/import_data.html',
+        url: './tmpl/utility/day3.html',
         onShow: function() {
             visible = true;
         },
@@ -123,6 +145,10 @@ function init() {
                     worker.port.emit('migrationCompleted');
                 }, "Migration:Ended", false);
             });
+            // handle when a user clicks on our search button
+            worker.port.on('searchClick', function() {
+                openSearch("Cute little fox");
+            });
         }
     });
 
@@ -137,6 +163,7 @@ function init() {
     });
 
     modifyFirstrun();
+    toggleSidebar();
 }
 
 init();
