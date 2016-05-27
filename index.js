@@ -54,7 +54,7 @@ function toggleSidebar(state) {
 
 /**
  * Purpose: Open the search bar and enter a specified search term
- * Parameters: searchTerm - a string of the term you would like to place in the searchbox
+ * @param {string} searchTerm - a string of the term you would like to place in the searchbox
  */
 function openSearch(searchTerm) {
     var activeWindow = utils.getMostRecentBrowserWindow();

@@ -118,7 +118,7 @@ body {
 }
 
 /* buttons */
-.button {
+.search-button {
     position: relative;
 	display: inline-block;
     background-color: #0095dd;
