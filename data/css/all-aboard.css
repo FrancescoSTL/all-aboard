@@ -17,6 +17,19 @@ body {
     font-size: 16px;
 }
 
+header {
+    padding-top: 20px;
+}
+
+.title, .intro {
+    text-align: center;
+}
+
+.button-container {
+    width: 70%;
+    margin: 0 auto;
+}
+
 .sidebar-content {
     background-color: #f6f6f6;
     width: 320px;
@@ -54,7 +67,8 @@ body {
 }
 
 .multiple-choice button {
-    margin-top: 40px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 100%;
 }
 
@@ -123,10 +137,10 @@ body {
 	display: inline-block;
     background-color: #0095dd;
 	color: #fff;
-	padding: 10px 36px;
+	padding: 10px 20px;
     border: 2px solid #0092cc;
 	border-radius: 4px;
-	font-size: 1.25rem;
+	font-size: 1rem;
 	text-align: center;
 	cursor: pointer;
 	transition: background-color .1s ease-in-out;
