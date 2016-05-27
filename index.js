@@ -122,7 +122,7 @@ function init() {
     content = sidebar.Sidebar({
         id: 'allboard-content',
         title: 'Make Firefox your own',
-        url: './tmpl/utility/day3.html',
+        url: './tmpl/utility/content1.html',
         onShow: function() {
             visible = true;
         },
