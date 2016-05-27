@@ -122,7 +122,7 @@ function init() {
     content = sidebar.Sidebar({
         id: 'allboard-content',
         title: ' ',
-        url: './tmpl/utility/content1.html',
+        url: './tmpl/values/content1.html',
         onShow: function() {
             visible = true;
         },
