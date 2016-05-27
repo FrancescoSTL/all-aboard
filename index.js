@@ -121,7 +121,7 @@ function init() {
 
     content = sidebar.Sidebar({
         id: 'allboard-content',
-        title: 'Make Firefox your own',
+        title: ' ',
         url: './tmpl/utility/content1.html',
         onShow: function() {
             visible = true;
