@@ -4,7 +4,7 @@
     
     // listen for a click on the search button
     searchButton.addEventListener('click', function() {
-        // alert the back-end that we've clicked the button
+        // notify addon that we've clicked the button
         addon.port.emit('searchClick');
     });
 })();
