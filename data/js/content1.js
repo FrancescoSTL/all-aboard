@@ -3,6 +3,7 @@
     var searchButton = document.querySelector('#answer_button');
     var mozillaRadio = document.getElementById('mozilla');
     var mozillaOption = document.getElementById('mozilla-Option');
+    var mozillaText = document.getElementById('mozillaText')
     var kidRadio = document.getElementById('kid');
     var singersRadio = document.getElementById('singers');
     var token1 = document.querySelector('#token1');
